@@ -1,0 +1,50 @@
+﻿@model ChangeDisciplinesModel
+@{
+    ViewData["Title"] = "ChangeDisciplines";
+}
+
+<h1>ChangeDisciplines</h1>
+
+<form asp-action="ChangeDisciplines" asp-controller="Students">
+    <input type="hidden" name="studentId" value="@Model.StudentId" />
+    <h3>Selected</h3>
+
+    @if (Model.Selected.Count() == 0)
+    {
+        <p>None of disciplines are selected</p>
+    }
+    else
+    {
+        foreach (var item in Model.Selected)
+        {
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="unselected" value="@item.Id" />
+                    @item.Title
+                </label>
+            </div>
+        }
+    }
+    <hr />
+    <h3>Unselected</h3>
+
+    @if (Model.Unselected.Count() == 0)
+    {
+        <p>None of disciplines are unselected</p>
+    }
+    else
+    {
+        foreach (var item in Model.Unselected)
+        {
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="selected" value="@item.Id" />
+                    @item.Title
+                </label>
+            </div>
+        }
+    }
+    <div class="form-group text-center">
+        <input type="submit" class="btn btn-primary" value="Submit"/> 
+    </div>
+</form>
