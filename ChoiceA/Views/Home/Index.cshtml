@@ -2,7 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model IEnumerable<Student>
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => student.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.Group)
+                </td>
+                <td>
+                    <a asp-controller="Students" asp-action="ChangeDisciplines" asp-route-id="@student.Id" class="btn btn-info">Change Discipline</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@

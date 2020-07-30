@@ -33,7 +33,7 @@ namespace ChoiceA
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<AppUser>(options => {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;

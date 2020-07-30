@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Net_GL_BaseCamp.Choice.Data;
-using Net_GL_BaseCamp.Choice.Models;
-using Net_GL_BaseCamp.Choice.Models.ViewModels;
+using ChoiceA.Data;
+using ChoiceA.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
-namespace Net_GL_BaseCamp.Choice.Controllers
+namespace ChoiceA.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public StudentsController(AppDbContext context)
+        public StudentsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Students
@@ -54,13 +60,29 @@ namespace Net_GL_BaseCamp.Choice.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Group")] Student student)
+        public async Task<IActionResult> Create([Bind("Name,Group")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                AppUser user = new AppUser
+                {
+                    UserName = student.Name,
+                    Email = $"{student.Name}@gmail.com"
+                };
+                //await _userManager.AddClaimAsync(user, new Claim("studentId", student.Id.ToString()));
+                var result = await _userManager.CreateAsync(user, "123456");
+
+                if (result.Succeeded)
+                {
+                    _context.Add(student);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
+                } else
+                {
+                    ModelState.AddModelError("Name", result.Errors.First().Description);
+                }
             }
             return View(student);
         }
@@ -149,7 +171,6 @@ namespace Net_GL_BaseCamp.Choice.Controllers
         {
             return _context.Students.Any(e => e.Id == id);
         }
-
 
         public IActionResult ChangeDisciplines(int id)
         {
