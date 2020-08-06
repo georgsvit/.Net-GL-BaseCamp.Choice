@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,5 +20,6 @@ namespace ChoiceA.Models
         public string Group { get; set; }
         //
         public ICollection<StudentDiscipline> StudentDisciplines { get; set; }
+        public IdentityUser AspNetUser { set; get; }
     }
 }

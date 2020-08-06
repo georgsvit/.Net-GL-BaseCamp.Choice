@@ -1,0 +1,32 @@
+﻿@model ChangeDisciplinesModel
+@{
+    ViewData["Title"] = "ChangeDisciplines";
+}
+
+<h1>ChangeDisciplines</h1>
+
+<form asp-action="ChangeDisciplines" asp-controller="Students">
+    <input type="hidden" name="studentId" value="@Model.StudentId" />
+    @foreach (var item in Model.Selected)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="selected" value="@item.Id" checked="checked" />
+                @item.Title
+            </label>
+        </div>
+    }
+    @foreach (var item in Model.Unselected)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="selected" value="@item.Id" />
+                @item.Title
+            </label>
+        </div>
+    }
+    
+    <div class="form-group text-center">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+</form>

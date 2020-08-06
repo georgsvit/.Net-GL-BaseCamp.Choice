@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using ChoiceA.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChoiceA.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }

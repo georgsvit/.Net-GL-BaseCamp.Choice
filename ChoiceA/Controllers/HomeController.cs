@@ -28,20 +28,20 @@ namespace ChoiceA.Controllers
 
         public IActionResult Index()
         {
-            Student student = _context.Students.FirstOrDefault(s => s.Name == User.Identity.Name);
+            //Student student = _context.Students.FirstOrDefault(s => s.Name == User.Identity.Name);
 
-            if (student == null)
-            {
-                return View();
-            }
-            return RedirectToAction("ChangeDisciplines", "Students", new { id = student.Id });
-
-            //Claim claim = User.Claims.FirstOrDefault(c => c.Type == "studentId");
-            //if (claim == null)
+            //if (student == null)
             //{
             //    return View();
             //}
-            //return RedirectToAction("ChangeDisciplines", "Students", new { id = Convert.ToInt32(claim.Value) });
+            //return RedirectToAction("ChangeDisciplines", "Students", new { id = student.Id });
+
+            Claim claim = User.Claims.FirstOrDefault(c => c.Type == "studentId");
+            if (claim == null)
+            {
+                return View();
+            }
+            return RedirectToAction("ChangeDisciplines", "Students", new { id = Convert.ToInt32(claim.Value) });
         }
 
         public IActionResult Privacy()
