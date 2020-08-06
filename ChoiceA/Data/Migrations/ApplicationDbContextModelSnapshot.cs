@@ -19,7 +19,7 @@ namespace ChoiceA.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ChoiceA.Models.AppUser", b =>
+            modelBuilder.Entity("ChoiceA.Models.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -120,6 +120,9 @@ namespace ChoiceA.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AspNetUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Group")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -131,6 +134,8 @@ namespace ChoiceA.Data.Migrations
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AspNetUserId");
 
                     b.ToTable("Students");
                 });
@@ -311,6 +316,13 @@ namespace ChoiceA.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ChoiceA.Models.Student", b =>
+                {
+                    b.HasOne("ChoiceA.Models.IdentityUser", "AspNetUser")
+                        .WithMany()
+                        .HasForeignKey("AspNetUserId");
+                });
+
             modelBuilder.Entity("ChoiceA.Models.StudentDiscipline", b =>
                 {
                     b.HasOne("ChoiceA.Models.Discipline", "Discipline")
@@ -337,7 +349,7 @@ namespace ChoiceA.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ChoiceA.Models.AppUser", null)
+                    b.HasOne("ChoiceA.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -346,7 +358,7 @@ namespace ChoiceA.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ChoiceA.Models.AppUser", null)
+                    b.HasOne("ChoiceA.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -361,7 +373,7 @@ namespace ChoiceA.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChoiceA.Models.AppUser", null)
+                    b.HasOne("ChoiceA.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -370,7 +382,7 @@ namespace ChoiceA.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ChoiceA.Models.AppUser", null)
+                    b.HasOne("ChoiceA.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

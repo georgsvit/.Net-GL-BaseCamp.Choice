@@ -17,9 +17,9 @@ namespace ChoiceA.Controllers
     public class StudentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public StudentsController(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public StudentsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -65,13 +65,14 @@ namespace ChoiceA.Controllers
             if (ModelState.IsValid)
             {
 
-                AppUser user = new AppUser
+                //IdentityUser user = new IdentityUser
+                IdentityUser user = new IdentityUser
                 {
                     UserName = student.Name,
                     Email = $"{student.Name}@gmail.com"
                 };
-                //await _userManager.AddClaimAsync(user, new Claim("studentId", student.Id.ToString()));
-                var result = await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddClaimAsync((IdentityUser)user, new Claim("studentId", student.Id.ToString()));
+                var result = await _userManager.CreateAsync((IdentityUser)user, "123456");
 
                 if (result.Succeeded)
                 {

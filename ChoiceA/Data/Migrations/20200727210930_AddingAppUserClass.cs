@@ -2,7 +2,7 @@
 
 namespace ChoiceA.Data.Migrations
 {
-    public partial class AddingAppUserClass : Migration
+    public partial class AddingIdentityUserClass : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
