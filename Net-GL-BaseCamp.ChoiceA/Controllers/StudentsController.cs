@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Net_GL_BaseCamp.ChoiceA.Attributes;
 using Net_GL_BaseCamp.ChoiceA.Data;
 using Net_GL_BaseCamp.ChoiceA.Models;
 
@@ -25,14 +26,14 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         // GET: Students
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Students.ToListAsync());
         }
 
         // GET: Students/Details/5
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,7 +52,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         // GET: Students/Create
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         public IActionResult Create()
         {
             return View();
@@ -60,7 +61,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         // POST: Students/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Group")] Student student)
@@ -87,7 +88,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         // GET: Students/Edit/5
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,7 +107,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         // POST: Students/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Group")] Student student)
@@ -140,7 +141,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         // GET: Students/Delete/5
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -159,7 +160,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         // POST: Students/Delete/5
-        [Authorize(Policy = "admin")]
+        [ForAdmin]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -175,7 +176,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
             return _context.Students.Any(e => e.Id == id);
         }
 
-        [Authorize(Policy = "Student")]
+        [ForStudent]
         public IActionResult ChangeDisciplines(int id)
         {
             List<int> selectedIds = _context.Students.Include("StudentDisciplines").SingleOrDefault(s => s.Id == id).StudentDisciplines
@@ -188,7 +189,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Student")]
+        [ForStudent]
         public IActionResult ChangeDisciplines(int studentId, int[] selected)
         {
             Student student = _context.Students.Include("StudentDisciplines").SingleOrDefault(s => s.Id == studentId);

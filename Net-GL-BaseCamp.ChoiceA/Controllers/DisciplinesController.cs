@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Net_GL_BaseCamp.ChoiceA.Attributes;
 using Net_GL_BaseCamp.ChoiceA.Data;
 using Net_GL_BaseCamp.ChoiceA.Models;
 
 namespace Net_GL_BaseCamp.ChoiceA.Controllers
 {
-    [Authorize(Policy = "admin")]
+    //[Authorize(Policy = "admin")]
+    [ForAdmin]
     public class DisciplinesController : Controller
     {
         private readonly ApplicationDbContext _context;
