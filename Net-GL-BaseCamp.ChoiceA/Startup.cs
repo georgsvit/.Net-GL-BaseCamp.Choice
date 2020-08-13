@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Net_GL_BaseCamp.ChoiceA.Models;
 using Net_GL_BaseCamp.ChoiceA.Services;
+using Net_GL_BaseCamp.ChoiceA.Extensions;
 
 namespace Net_GL_BaseCamp.ChoiceA
 {
@@ -84,12 +85,16 @@ namespace Net_GL_BaseCamp.ChoiceA
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseTopSecret();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

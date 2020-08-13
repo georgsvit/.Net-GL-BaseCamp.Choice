@@ -27,9 +27,4 @@ namespace Net_GL_BaseCamp.ChoiceA.Services
             };
         }
     }
-
-    public static class GroupServiceExtension
-    {
-        public static IServiceCollection AddGroupService(this IServiceCollection service) => service.AddTransient<IGroupService, GroupService>();
-    }
 }
