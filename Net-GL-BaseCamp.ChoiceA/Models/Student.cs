@@ -16,7 +16,7 @@ namespace Net_GL_BaseCamp.ChoiceA.Models
         [Remote("ValidateName", "Students")]
         public string Name { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "{0} name is too short or too long")]
+        //[StringLength(20, MinimumLength = 3, ErrorMessage = "{0} name is too short or too long")]
         public string Group { get; set; }
         //
         public ICollection<StudentDiscipline> StudentDisciplines { get; set; }

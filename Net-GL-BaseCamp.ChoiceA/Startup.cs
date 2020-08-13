@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Net_GL_BaseCamp.ChoiceA.Models;
+using Net_GL_BaseCamp.ChoiceA.Services;
 
 namespace Net_GL_BaseCamp.ChoiceA
 {
@@ -64,6 +65,8 @@ namespace Net_GL_BaseCamp.ChoiceA
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddGroupService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
