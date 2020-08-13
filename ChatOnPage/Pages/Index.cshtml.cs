@@ -27,19 +27,22 @@ namespace ChatOnPage.Pages
             _db = db;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             Messages = _db.Messages.ToList();
+            return Page();
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
                 _db.Messages.Add(new Message(Text, DateTime.Now, User.Identity.Name));
                 _db.SaveChanges();
+                return RedirectToAction(nameof(OnGet));
             }
             Messages = _db.Messages.ToList();
+            return Page();
         }
     }
 }
