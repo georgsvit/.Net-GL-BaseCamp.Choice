@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@foreach (var mes in Model.Messages)
+{
+    <div style="font-size:larger">@mes.Text</div>
+    <div style="font-size: smaller">@mes.AuthorName --- @mes.SendingTime</div>
+}
+<hr />
+<div>
+    <form method="post">
+        <label asp-for="Text"></label>
+        <input asp-for="Text" value="" />
+        <input type="submit" value="Send" />
+        <span asp-validation-for="Text"></span>
+    </form>
+</div>
